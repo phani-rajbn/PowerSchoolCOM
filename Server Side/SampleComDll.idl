@@ -1,0 +1,38 @@
+import "oaidl.idl";
+import "ocidl.idl";
+//SYntax to include external IDL files....
+
+[
+	object, //Its a COM interface object
+	uuid(74B8E1C3-799B-464C-914B-3E862D9D138A)
+]
+//All interfaces in COM are to be derived from IUnknown....
+//All Methods of COM are to return a 32 Bit Error Code called HRESULT. 
+interface IAddComponent : IUnknown {
+	HRESULT AddFunc(int iVal1, int iVal2, int* iRes);//Any return value will be by Reference or Pointer....
+};
+
+[
+	object, //Its a COM interface object
+	uuid(7D74F030-C194-45A7-BA54-43C1D6D6A54E)
+]
+interface ISubComponent : IUnknown {
+	HRESULT SubFunc(int iVal1, int iVal2, int* iRes);
+};
+
+[
+	uuid(675A1B51-D2E5-4875-95E5-55B391DF52A1),
+	version(1.0)
+]
+library SampleComDllLib {
+	importlib("stdole32.tlb");
+	[
+		uuid(CA34FFC1-F4D4-4A23-B32F-6EAAE2278287)
+	]
+	coclass MathComponent {
+		[default]
+		interface IAddComponent;
+		interface ISubComponent;
+	};
+}
+
